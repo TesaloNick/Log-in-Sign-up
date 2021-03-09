@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.container{
+    max-width: 1200px;
+    margin: auto;
+}
+
+button{
+    width: 285px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    padding: 12px 0;
+    border-radius: 30px;
+    border: solid #1958DB 2px;
+    display: block;
+    margin: 10px 0;
+}
+input{
+    padding: 10px;
+    width: 300px;
+    margin: 10px 0;
+}
+p{
+    margin: 10px 0;
+}
+.sign-up, .log-in{
+    display: none;
+}
