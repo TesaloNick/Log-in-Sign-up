@@ -16,11 +16,12 @@ const sendLogIn = document.querySelector('.send-log-in')
 
 let arrFormRegistration = []
 const Site = function() {
+    const self = this
     this.showMainPage = function() {
         mainPage.style.display = 'block'
         signUp.style.display = 'none'
         logIn.style.display = 'none'
-        const self = this
+        // const self=this
         buttonLogIn.addEventListener('click', self.showAuthPage)
         buttonSignUp.addEventListener('click', self.showRegistrationPage)
     }
@@ -28,9 +29,10 @@ const Site = function() {
         mainPage.style.display = 'none'
         signUp.style.display = 'block'
         logIn.style.display = 'none'
-        const self = this
+        // const self=this
         buttonMainPage[1].addEventListener('click', self.showMainPage)
         sendRegistration.addEventListener('click', self.registration)
+        // debugger
         // adressRegistration.value = ''
         //     passwordRegistration.value = ''
         //     passwordRegistrationRepeat.value = ''
@@ -40,7 +42,7 @@ const Site = function() {
         mainPage.style.display = 'none'
         signUp.style.display = 'none'
         logIn.style.display = 'block'
-        const self = this
+        // const self=this
         buttonMainPage[0].addEventListener('click', self.showMainPage)
         sendLogIn.addEventListener('click', self.login)
 
