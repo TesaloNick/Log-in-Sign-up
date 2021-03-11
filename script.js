@@ -36,18 +36,18 @@ const Site = function() {
         buttonMainPage[1].addEventListener('click', self.showMainPage)
         sendRegistration.addEventListener('click', self.registration)
         adressRegistration.value = '1'
-        passwordRegistration.value = '1'
-        passwordRegistrationRepeat.value = '1'
-        adressRegistration.addEventListener('keydown', (event) => {          // добавляет задачу по нажатию на Enter
+        passwordRegistration.value = '123456'
+        passwordRegistrationRepeat.value = '123456'
+        adressRegistration.addEventListener('keydown', (event) => {   // добавляет задачу по нажатию на Enter
             if (event.key === 'Enter') self.registration()
         })
-        passwordRegistration.addEventListener('keydown', (event) => {          // добавляет задачу по нажатию на Enter
+        passwordRegistration.addEventListener('keydown', (event) => {   // добавляет задачу по нажатию на Enter
             if (event.key === 'Enter') self.registration()
         })
-        passwordRegistrationRepeat.addEventListener('keydown', (event) => {          // добавляет задачу по нажатию на Enter
+        passwordRegistrationRepeat.addEventListener('keydown', (event) => {   // добавляет задачу по нажатию на Enter
             if (event.key === 'Enter') self.registration()
         })
-        document.querySelector('.link-to-log-in').addEventListener('click', self.showAuthPage)
+        document.querySelector('.link-to-log-in').addEventListener('click', self.showAuthPage) // переход на страницу входа по ссылке
 
     }
     this.showAuthPage = function() {
@@ -62,9 +62,8 @@ const Site = function() {
         passwordLogIn.addEventListener('keydown', (event) => {          // добавляет задачу по нажатию на Enter
             if (event.key === 'Enter') self.login()
         })
-        document.querySelector('.link-to-sign-up').addEventListener('click', self.showRegistrationPage)
+        document.querySelector('.link-to-sign-up').addEventListener('click', self.showRegistrationPage) // переход на страницу регистрации по ссылке
         console.log(document.querySelector('.link-to-sign-up'));
-        // link-to-log-in
     }
     this.registration = function() {
         const user = {email: adressRegistration.value, password: passwordRegistration.value, repeatPassword: passwordRegistrationRepeat.value}
@@ -75,7 +74,7 @@ const Site = function() {
                 sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
             } 
         } else {
-            if (signUp.contains(document.querySelector('.wrong-input-value'))) {
+            if (signUp.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
                 sendRegistration.previousElementSibling.remove()
             }
             if (adressRegistration.value === '') {      // проверка на заполнение всех форм
@@ -84,7 +83,7 @@ const Site = function() {
                     sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
                 } 
             } else {
-                if (signUp.contains(document.querySelector('.wrong-input-value'))) {
+                if (signUp.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
                     sendRegistration.previousElementSibling.remove()
                 }
                 arrFormRegistration.push(user)
@@ -99,21 +98,21 @@ const Site = function() {
                 sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
             } 
         } else {
-            if (logIn.contains(document.querySelector('.wrong-input-value'))) {
+            if (logIn.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
                 sendLogIn.previousElementSibling.remove()
             }
-            const user = arrFormRegistration.find(currentUser => currentUser.email === adressLogIn.value)
-            if (user === undefined) {
+            const user = arrFormRegistration.find(currentUser => currentUser.email === adressLogIn.value) // создает объект с искомыми параметрами 
+            if (user === undefined) {       // проверка на наличие в массиве искомого email'a
                 wrongInput.innerHTML = 'Вы ввели неправильный адрес электронной почты'
                 if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
                     sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
                 } 
             } else if (user.password === passwordLogIn.value) {
-                if (logIn.contains(document.querySelector('.wrong-input-value'))) {
+                if (logIn.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
                     sendLogIn.previousElementSibling.remove()
                 }
                 alert('ПОЗДРАВЛЯЮ. Вы авторизировались!')
-            } else {
+            } else {            // проверка на правильность воода массива
                 wrongInput.innerHTML = 'Вы ввели неправильный пароль'
                 if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
                     sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
@@ -121,7 +120,6 @@ const Site = function() {
             }
         }
     }
-
 }
 
 const site = new Site()

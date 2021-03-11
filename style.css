@@ -3,13 +3,18 @@
     margin: 0;
     box-sizing: border-box;
 }
+body > div{
+    height: 100vh;
+    overflow: auto;
+    background-image: url(images/Vector\ 1.svg);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
 .container{
     max-width: 1200px;
     margin: auto;
-    height: 100vh;
-    overflow: auto;
-}
 
+}
 button{
     cursor: pointer;
     width: 285px;
@@ -36,8 +41,11 @@ button:hover{
 input{
     display: block;
     padding: 10px;
-    width: 400px;
+    width: 100%;
     margin: 10px 0;
+}
+input::placeholder{
+    color: #BFBFBF;
 }
 p{
     display: block;
@@ -48,12 +56,16 @@ p{
 }
 a{
     display: block;
-    margin: 10px 0;
+    margin-top: 40px;
     text-align: center;
     font-size: 14px;
     font-family: Montserrat;
     color: #1958DB;
     font-weight: bold;
+}
+a:hover{
+    transform: scale(1.1);
+    transition: 0.5s;
 }
 .sign-up, .log-in{
     display: none;
@@ -61,11 +73,16 @@ a{
 .main-page, .log-in, .sign-up{
     width: 400px;
     margin: auto;
+    z-index: 1;
 }
 .p-main{
-    color: #262626;
+    color: #1d1d1d;
     padding-top: 10px;
 }
 .send-log-in, .send-registration{
     margin-top: 40px;
+}
+.main-image{
+    display: block;
+    margin: 20px auto;
 }
