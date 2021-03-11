@@ -42,6 +42,18 @@ input{
 p{
     display: block;
     margin: 10px 0;
+    font-size: 14px;
+    font-family: Montserrat;
+    color: #8C8C8C;
+}
+a{
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    font-family: Montserrat;
+    color: #1958DB;
+    font-weight: bold;
 }
 .sign-up, .log-in{
     display: none;
@@ -49,5 +61,11 @@ p{
 .main-page, .log-in, .sign-up{
     width: 400px;
     margin: auto;
-
+}
+.p-main{
+    color: #262626;
+    padding-top: 10px;
+}
+.send-log-in, .send-registration{
+    margin-top: 40px;
 }
