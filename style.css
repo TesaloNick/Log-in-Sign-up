@@ -13,8 +13,8 @@ body > div{
 .container{
     max-width: 1200px;
     margin: auto;
-
 }
+
 button{
     cursor: pointer;
     width: 285px;

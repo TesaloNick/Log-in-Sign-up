@@ -35,7 +35,7 @@ const Site = function() {
         logIn.style.display = 'none'
         buttonMainPage[1].addEventListener('click', self.showMainPage)
         sendRegistration.addEventListener('click', self.registration)
-        adressRegistration.value = '1'
+        adressRegistration.value = 'tesa@gmail.com'
         passwordRegistration.value = '123456'
         passwordRegistrationRepeat.value = '123456'
         adressRegistration.addEventListener('keydown', (event) => {   // добавляет задачу по нажатию на Enter
@@ -48,7 +48,6 @@ const Site = function() {
             if (event.key === 'Enter') self.registration()
         })
         document.querySelector('.link-to-log-in').addEventListener('click', self.showAuthPage) // переход на страницу входа по ссылке
-
     }
     this.showAuthPage = function() {
         mainPage.style.display = 'none'
@@ -63,7 +62,6 @@ const Site = function() {
             if (event.key === 'Enter') self.login()
         })
         document.querySelector('.link-to-sign-up').addEventListener('click', self.showRegistrationPage) // переход на страницу регистрации по ссылке
-        console.log(document.querySelector('.link-to-sign-up'));
     }
     this.registration = function() {
         const user = {email: adressRegistration.value, password: passwordRegistration.value, repeatPassword: passwordRegistrationRepeat.value}
@@ -74,19 +72,30 @@ const Site = function() {
                 sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
             } 
         } else {
-            if (signUp.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
-                sendRegistration.previousElementSibling.remove()
-            }
-            if (adressRegistration.value === '') {      // проверка на заполнение всех форм
+            if ((adressRegistration.value === '') || (passwordRegistration.value === '') || (passwordRegistrationRepeat.value === '')) {      // проверка на заполнение всех форм
                 wrongInput.innerHTML = 'Заполните все поля формы' 
                 if (!(signUp.contains(document.querySelector('.wrong-input-value')))) {
                     sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
                 } 
             } else {
-                if (signUp.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
-                    sendRegistration.previousElementSibling.remove()
+                if (passwordRegistration.value.split('').length < 6) {   // проверка на длину пароля
+                    wrongInput.innerHTML = 'Пароль должен состоять не менее чем из 6 символов' 
+                    if (!(signUp.contains(document.querySelector('.wrong-input-value')))) {
+                        sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
+                    }
+                } else {
+                    if (!(/^[a-zA-Z][a-zA-Z0-9]+\@[\w\.\-]+\.\w{2,11}/g.test(adressRegistration.value))) { // проверка на правильность ввода email'a
+                        wrongInput.innerHTML = 'Вы неправильно ввели адрес электронной почты' 
+                        if (!(signUp.contains(document.querySelector('.wrong-input-value')))) {
+                            sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
+                        } 
+                    } else {
+                        if (signUp.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
+                            sendRegistration.previousElementSibling.remove()
+                        }
+                        arrFormRegistration.push(user)
+                    }
                 }
-                arrFormRegistration.push(user)
             }
         }
         console.log(arrFormRegistration);
@@ -98,26 +107,26 @@ const Site = function() {
                 sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
             } 
         } else {
-            if (logIn.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
-                sendLogIn.previousElementSibling.remove()
-            }
             const user = arrFormRegistration.find(currentUser => currentUser.email === adressLogIn.value) // создает объект с искомыми параметрами 
             if (user === undefined) {       // проверка на наличие в массиве искомого email'a
                 wrongInput.innerHTML = 'Вы ввели неправильный адрес электронной почты'
                 if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
                     sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
                 } 
-            } else if (user.password === passwordLogIn.value) {
-                if (logIn.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
-                    sendLogIn.previousElementSibling.remove()
+            } else {
+                if (user.password !== passwordLogIn.value) {
+                    wrongInput.innerHTML = 'Вы ввели неправильный пароль'
+                    if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
+                        sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
+                    } 
+                } else {            // проверка на правильность воода массива
+                    if (logIn.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
+                        sendLogIn.previousElementSibling.remove()
+                    }
+                    console.log(user);
+                    alert('ПОЗДРАВЛЯЮ. Вы авторизировались!')
                 }
-                alert('ПОЗДРАВЛЯЮ. Вы авторизировались!')
-            } else {            // проверка на правильность воода массива
-                wrongInput.innerHTML = 'Вы ввели неправильный пароль'
-                if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
-                    sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
-                } 
-            }
+            } 
         }
     }
 }
