@@ -47,9 +47,9 @@ const Site = function() {
         logIn.style.display = 'none'
         buttonMainPage[1].addEventListener('click', self.showMainPage)
         sendRegistration.addEventListener('click', self.registration)
-        adressRegistration.value = 'tesa@gmail.com'
-        passwordRegistration.value = '123456'
-        passwordRegistrationRepeat.value = '123456'
+        // adressRegistration.value = 'tesa@gmail.com'
+        // passwordRegistration.value = '123456'
+        // passwordRegistrationRepeat.value = '123456'
         adressRegistration.addEventListener('keydown', (event) => {   // добавляет задачу по нажатию на Enter
             if (event.key === 'Enter') self.registration()
         })
@@ -92,6 +92,7 @@ const Site = function() {
                     } else {
                         deleteWrong(signUp, sendRegistration)
                         arrFormRegistration.push(user)
+                        alert('Ваши контакты сохранены')
                     }
                 }
             }
