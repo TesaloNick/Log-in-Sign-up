@@ -15,9 +15,21 @@ const passwordLogIn = document.querySelector('.password-log-in')
 const sendRegistration = document.querySelector('.send-registration')   // кнопки отправки данных
 const sendLogIn = document.querySelector('.send-log-in')
 
-let wrongInput = document.createElement('p')       // строка об ошибке при неправильном вводе данных
+let wrongInput = document.createElement('p')       // предупреждающая надпись при неправильном вводе данных
 wrongInput.style.color = 'red'
 wrongInput.classList.add('wrong-input-value')
+let insertWrong = function(container, button, wrong) { // добавление предупреждающей надписи
+    wrongInput.innerHTML = wrong 
+    if (!(container.contains(document.querySelector('.wrong-input-value')))) {
+        button.insertAdjacentElement('beforebegin', wrongInput)
+    }
+}
+let deleteWrong = function(container, button) { // удаляет предупреждающую надпись
+    if (container.contains(document.querySelector('.wrong-input-value'))) { 
+        button.previousElementSibling.remove()
+    }
+}
+
 
 let arrFormRegistration = []
 const Site = function() {
@@ -35,9 +47,9 @@ const Site = function() {
         logIn.style.display = 'none'
         buttonMainPage[1].addEventListener('click', self.showMainPage)
         sendRegistration.addEventListener('click', self.registration)
-        // adressRegistration.value = 'tesa@gmail.com'
-        // passwordRegistration.value = '123456'
-        // passwordRegistrationRepeat.value = '123456'
+        adressRegistration.value = 'tesa@gmail.com'
+        passwordRegistration.value = '123456'
+        passwordRegistrationRepeat.value = '123456'
         adressRegistration.addEventListener('keydown', (event) => {   // добавляет задачу по нажатию на Enter
             if (event.key === 'Enter') self.registration()
         })
@@ -67,32 +79,18 @@ const Site = function() {
         const user = {email: adressRegistration.value, password: passwordRegistration.value, repeatPassword: passwordRegistrationRepeat.value}
 
         if (passwordRegistration.value !== passwordRegistrationRepeat.value) {  // проверка на правильность ввода пароля
-            wrongInput.innerHTML = 'Второй пароль не совпал с первым' 
-            if (!(signUp.contains(document.querySelector('.wrong-input-value')))) {
-                sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
-            } 
+            insertWrong(signUp, sendRegistration, 'Второй пароль не совпал с первым')
         } else {
             if ((adressRegistration.value === '') || (passwordRegistration.value === '') || (passwordRegistrationRepeat.value === '')) {      // проверка на заполнение всех форм
-                wrongInput.innerHTML = 'Заполните все поля формы' 
-                if (!(signUp.contains(document.querySelector('.wrong-input-value')))) {
-                    sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
-                } 
+                insertWrong(signUp, sendRegistration, 'Заполните все поля формы')
             } else {
                 if (passwordRegistration.value.split('').length < 6) {   // проверка на длину пароля
-                    wrongInput.innerHTML = 'Пароль должен состоять не менее чем из 6 символов' 
-                    if (!(signUp.contains(document.querySelector('.wrong-input-value')))) {
-                        sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
-                    }
+                    insertWrong(signUp, sendRegistration, 'Пароль должен состоять не менее чем из 6 символов')
                 } else {
                     if (!(/^[a-zA-Z][a-zA-Z0-9]+\@[\w\.\-]+\.\w{2,11}/g.test(adressRegistration.value))) { // проверка на правильность ввода email'a
-                        wrongInput.innerHTML = 'Вы неправильно ввели адрес электронной почты' 
-                        if (!(signUp.contains(document.querySelector('.wrong-input-value')))) {
-                            sendRegistration.insertAdjacentElement('beforebegin', wrongInput)
-                        } 
+                    insertWrong(signUp, sendRegistration, 'Вы неправильно ввели адрес электронной почты')
                     } else {
-                        if (signUp.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
-                            sendRegistration.previousElementSibling.remove()
-                        }
+                        deleteWrong(signUp, sendRegistration)
                         arrFormRegistration.push(user)
                     }
                 }
@@ -102,28 +100,16 @@ const Site = function() {
     }
     this.login = function() {
         if (adressLogIn.value === '') {      // проверка на заполнение всех форм
-            wrongInput.innerHTML = 'Заполните все поля формы' 
-            if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
-                sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
-            } 
+            insertWrong(logIn, sendLogIn, 'Заполните все поля формы')
         } else {
             const user = arrFormRegistration.find(currentUser => currentUser.email === adressLogIn.value) // создает объект с искомыми параметрами 
             if (user === undefined) {       // проверка на наличие в массиве искомого email'a
-                wrongInput.innerHTML = 'Вы ввели неправильный адрес электронной почты'
-                if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
-                    sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
-                } 
+            insertWrong(logIn, sendLogIn, 'Вы ввели неправильный адрес электронной почты')
             } else {
                 if (user.password !== passwordLogIn.value) {
-                    wrongInput.innerHTML = 'Вы ввели неправильный пароль'
-                    if (!(logIn.contains(document.querySelector('.wrong-input-value')))) {
-                        sendLogIn.insertAdjacentElement('beforebegin', wrongInput)
-                    } 
+                    insertWrong(logIn, sendLogIn, 'Вы ввели неправильный пароль')
                 } else {            // проверка на правильность воода массива
-                    if (logIn.contains(document.querySelector('.wrong-input-value'))) { // удаляет предупреждающую надпись
-                        sendLogIn.previousElementSibling.remove()
-                    }
-                    console.log(user);
+                    deleteWrong(logIn, sendLogIn)
                     alert('ПОЗДРАВЛЯЮ. Вы авторизировались!')
                 }
             } 
